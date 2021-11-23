@@ -14,8 +14,8 @@ router.post("/api/workouts", ({ body }, res) => {
 
 router.put("/api/workouts/:id", ({params, body}, res) => {
     Workout.findByIdAndUpdate(params.id, {$push: {exercise: body}})
-        .then(dbWorkout => {
-            res.json(dbWorkout);
+        .then(data => {
+            res.send(data);
         })
         .catch(err => {
             res.status(400).json(err);
