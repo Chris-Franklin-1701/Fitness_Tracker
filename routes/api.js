@@ -13,9 +13,9 @@ router.post("/api/workouts", ({ body }, res) => {
 });
 
 router.put("/api/workouts/:id", ({params, body}, res) => {
-    Workout.findByIdAndUpdate(params.id, {$push: {exercise: body}})
-        .then(data => {
-            res.send(data);
+    Workout.findByIdAndUpdate(params.id, {$push: {exercise: body}}, {new: true})
+        .then(dbWorkout => {
+            res.json(dbWorkout);
         })
         .catch(err => {
             res.status(400).json(err);
@@ -23,8 +23,11 @@ router.put("/api/workouts/:id", ({params, body}, res) => {
 });
 
 router.get("/api/workouts", (req, res) => {
-    Workout.find({})
-    .sort({ date: -1 })
+    Workout.aggregate([ { $addFields: {
+        totalDuration: { 
+            $sum: "$exercises.duration"}
+    }},
+    ])
     .then(dbWorkout => {
         res.json(dbWorkout);
     })
@@ -34,7 +37,12 @@ router.get("/api/workouts", (req, res) => {
 });
 
 router.get("/api/workouts/range", ({body}, res) =>{
-    Workout.find()
+    Workout.find([ { $addFields: {
+        totalDuration: {
+            $sum: "$exercises.duration"
+        }
+    }},
+    ])
     .then(dbWorkout => {
         res.json(dbWorkout);
     })
