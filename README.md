@@ -1,6 +1,11 @@
 # Fitness_Tracker
   [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
+  ![Preview of the project](./fitness-tracker.png)
+
+  ![Preview of the project](./fitness-tracker2.png)
+
+
   ## Description:
   This is a fitness tracker app that allows you to log and continue workouts, as well as track progress.
 
